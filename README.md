@@ -1,23 +1,21 @@
-# LLM Destekli Optuna Hiperparametre Optimizasyonu
+# LLM-Assisted Optuna Hyperparameter Optimization
 
-Bu proje, Scikit-learn RandomForestRegressor modeli üzerinde hiperparametre optimizasyonu (tuning) yaparken iki farklı Optuna yaklaşımını karşılaştırır:
+This project compares two different Optuna approaches for hyperparameter optimization (tuning) on ​​a Scikit-learn `RandomForestRegressor` model:
 
-1. **LLM Destekli Yöntem:** Google Gemini API kullanılarak veri seti istatistiklerine (satır/sütun sayısı) göre veri setine özel, mantıklı ve daraltılmış bir arama uzayı (search space) üretilir.
-2. **Geleneksel Yöntem:** Literatürde genel kabul görmüş, standart ve çok geniş hiperparametre sınırları kullanılır.
+1. **LLM-Assisted Method:** Using the Google Gemini API, a dataset-specific, logical, and narrowed-down search space is generated based on dataset statistics (number of rows/columns).
+2. **Traditional Method:** Standard, widely accepted, and very broad hyperparameter ranges found in the literature are used.
 
-Proje, LLM destekli aramanın benzer başarı (R2) skorlarını nasıl çok daha hafif, sığ ve canlı sisteme (production) uygun modellerle (düşük `max_depth` ve `n_estimators`) elde ettiğini kanıtlar.
+The project demonstrates how the LLM-assisted search achieves similar success (R²) scores using much lighter, shallower models (lower `max_depth` and `n_estimators`) that are better suited for production environments.
 
-## Proje Karşılaştırma Sonuçları
+## Project Comparison Results
 
-California Housing (~20.640 satır) regresyon veri seti üzerinde yapılan 10'ar denemelik Optuna optimizasyonu sonucunda aşağıdaki çıktılar elde edilmiştir:
+The following results were obtained from Optuna optimization runs (10 trials each) performed on the California Housing regression dataset (~20,640 rows):
 
-* **LLM Destekli Model Skoru (R²):** 0.6582
-  * *Bulunan Parametreler:* `{'max_depth': 13, 'n_estimators': 88}`
+* **LLM-Assisted Model Score (R²):** 0.6582
+  * *Parameters Found:* `{'max_depth': 13, 'n_estimators': 88}`
 
-* **Geleneksel Model Skoru (R²):** 0.6587
-  * *Bulunan Parametreler:* `{'max_depth': 49, 'n_estimators': 121}`
+* **Traditional Model Score (R²):** 0.6587
+  * *Parameters Found:* `{'max_depth': 49, 'n_estimators': 121}`
 
-### Sonuç Analizi
-Geleneksel yöntem sadece **0.0005** puanlık mikroskobik bir skor artışı için modelin karmaşıklığını devasa oranda artırmıştır (`max_depth: 49`). Bu durum modelin veriyi öğrenmek yerine ezberlemeye (overfitting) yatkın olduğunu gösterir. 
-
-LLM destekli yöntem ise, Optuna'ya baştan mantıklı sınırlar çizerek aynı başarıyı çok daha sığ (13 derinlik) ve daha az ağaca (88 ağaç) sahip bir modelle bulmuştur. 
+### Analysis of Results
+The traditional method drastically increased model complexity (`max_depth: 49`) for a microscopic score gain of only **0.0005**. This indicates a tendency for the model to memorize the data (overfitting) rather than learning from it. The LLM-assisted method, on the other hand, achieved the same level of success by setting reasonable initial boundaries for Optuna, resulting in a model that was much shallower (depth of 13) and comprised fewer trees (88 trees).
