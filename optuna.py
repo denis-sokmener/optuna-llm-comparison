@@ -46,7 +46,7 @@ Lütfen bana SADECE aşağıdaki yapıda, bu veri setinin boyutlarına uygun bir
 """
 
 print(f"1. AŞAMA: LLM'den {n_samples} satırlık veri için hiperparametre uzayı isteniyor...")
-llm_model = genai.GenerativeModel('gemini-1.5-flash')
+llm_model = genai.GenerativeModel('gemini-3.6-flash')
 response = llm_model.generate_content(
     prompt,
     generation_config={"response_mime_type": "application/json"}
